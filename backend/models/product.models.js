@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const productSchema = mongoose.Schema(
+const productSchema = new mongoose.Schema(
   {
     product_category: {
       type: String,
@@ -15,9 +15,28 @@ const productSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    product_category_lower: {
+      type: String,
+      lowercase: true,
+      required: true,
+      trim: true,
+    },
+    product_brand_lower: {
+      type: String,
+      lowercase: true,
+      required: true,
+      trim: true,
+    },
+    product_name_lower: {
+      type: String,
+      lowercase: true,
+      required: true,
+      trim: true,
+    },
     product_image: {
       type: String,
-      default: "jlkjlklkjlkj",
+      default:
+        "https://img.freepik.com/free-vector/hand-drawn-no-data-illustration_23-2150696458.jpg?t=st=1765617934~exp=1765621534~hmac=47d6019c5221a000cadd3d13918f92ef6f800c69eaa290a2a65fe8e823cdad57&w=1480",
     },
     product_cost_price: {
       type: Number,
@@ -55,12 +74,15 @@ const productSchema = mongoose.Schema(
       sparse: true,
       trim: true,
     },
+    is_active: {
+      type: Boolean,
+      default: true,
+    },
   },
   { timestamps: true }
 );
 
 const productModel = mongoose.model("product", productSchema);
-
 export default productModel;
 
 // {
