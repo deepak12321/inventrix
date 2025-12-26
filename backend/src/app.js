@@ -12,6 +12,9 @@ app.use(express.urlencoded({ extended: true, limit: "32kb" }));
 import productRouter from "../routes/products.routes.js";
 app.use("/api/v1/products", productRouter);
 
+import stockRouter from "../routes/stocks.routes.js";
+app.use("/api/v1/stocks", stockRouter);
+
 app.get("/", (request, response) => {
   response.status(200).json({
     success: true,

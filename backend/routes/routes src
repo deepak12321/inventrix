@@ -1,0 +1,13 @@
+## Product Routes (Especially for product model)
+
+/api/v1/products/add-products --> save products in database
+/api/v1/products/find-products --> to find products avalilable in the inventory
+
+/api/v1/products/delete-product --> to delete a specific product in database
+/api/v1/products/update-product/product_id --> update product details using id.
+
+---
+
+## Stocks Routes ()
+
+/api/v1/stocks/update-stocks
