@@ -1,4 +1,4 @@
-import productModel from "../models/product.models.js";
+import Product from "../models/product.models.js";
 
 // cloudnary feature implementation left
 
@@ -39,7 +39,7 @@ const saveProductDetails = async (request, response) => {
     }
 
     // finding if the data exist already
-    const findResult = await productModel.findOne({
+    const findResult = await Product.findOne({
       product_name,
       product_brand,
     });
@@ -70,7 +70,7 @@ const saveProductDetails = async (request, response) => {
 
     // console.log(uploadData);
 
-    const uploadResult = await productModel.create(productData);
+    const uploadResult = await Product.create(productData);
     console.log(uploadResult);
 
     // console.log(productData);
@@ -110,16 +110,16 @@ const getProductDetails = async (request, response) => {
 
     if (product_name && product_brand) {
       searchResult.search_criteria = `${product_name} and ${product_brand}`;
-      searchResult.data = await productModel.find({
+      searchResult.data = await Product.find({
         product_name,
         product_brand,
       });
     } else if (product_name) {
       searchResult.search_criteria = `${product_name}`;
-      searchResult.data = await productModel.find({ product_name });
+      searchResult.data = await Product.find({ product_name });
     } else if (product_brand) {
       searchResult.search_criteria = `${product_brand}`;
-      searchResult.data = await productModel.find({ product_brand });
+      searchResult.data = await Product.find({ product_brand });
     }
 
     if (searchResult.data.length == 0) {
@@ -146,6 +146,54 @@ const getProductDetails = async (request, response) => {
   }
 };
 
+const getProdyctbyCategory = async (request, response) => {
+  try {
+    const { categoryName } = request.params;
+
+    if (!categoryName) {
+      return response.status(400).json({
+        success: false,
+        message: "Category name is required",
+      });
+    }
+
+    const data = await Product.find({
+      product_category_lower: categoryName.toLowerCase(),
+      is_active: true,
+    });
+
+    return response.status(200).json({
+      success: true,
+      message: "Category Fetched Successfully",
+      data: data,
+    });
+  } catch (error) {
+    console.log("An error occurred while fetching Category", error);
+    return response.status(500).json({
+      success: false,
+      message: "Failed to fetch Category",
+    });
+  }
+};
+
+const getAllCategory = async (request, response) => {
+  try {
+    const data = await Product.distinct("product_category");
+    console.log(data);
+    return response.status(200).json({
+      success: true,
+      message: "Category Fetched Successfully",
+      data: data,
+    });
+  } catch (error) {
+    console.log("An error occurred while fetching Category", error);
+    return response.status(500).json({
+      success: false,
+      message: "Failed to fetch Category",
+    });
+  }
+};
+
 const deleteProduct = async (request, response) => {
   // delete product form database
 
@@ -159,7 +207,7 @@ const deleteProduct = async (request, response) => {
       });
     }
 
-    const isDeleted = await productModel.deleteOne({ _id: product_id });
+    const isDeleted = await Product.deleteOne({ _id: product_id });
 
     return response.status(200).json({
       success: true,
@@ -192,7 +240,7 @@ const updateEntries = async (request, response) => {
     }
 
     // 2️⃣ find product
-    const product = await productModel.findById(id);
+    const product = await Product.findById(id);
 
     if (!product) {
       return response.status(404).json({
@@ -249,4 +297,11 @@ const updateEntries = async (request, response) => {
   }
 };
 
-export { saveProductDetails, getProductDetails, deleteProduct, updateEntries };
+export {
+  saveProductDetails,
+  getProductDetails,
+  getAllCategory,
+  getProdyctbyCategory,
+  deleteProduct,
+  updateEntries,
+};
