@@ -7,6 +7,7 @@
 ---
 
 ## Table of Contents
+
 1. [Project Overview](#project-overview)
 2. [Technology Stack](#technology-stack)
 3. [Project Structure](#project-structure)
@@ -25,6 +26,7 @@
 **InventoryMS (Inventrix)** is a comprehensive inventory management system designed to track products and stock movements efficiently. The system provides RESTful APIs for managing product information, stock levels, and transaction history.
 
 ### Key Capabilities
+
 - Product catalog management with detailed attributes
 - Stock tracking with transaction history
 - Support for multiple stock actions (IN/OUT)
@@ -36,6 +38,7 @@
 ## Technology Stack
 
 ### Backend
+
 - **Runtime:** Node.js with ES6 Modules
 - **Framework:** Express.js v5.2.1
 - **Database:** MongoDB with Mongoose ORM v9.0.1
@@ -47,6 +50,7 @@
 - **Dev Tool:** Nodemon v3.1.11
 
 ### Frontend
+
 - **Status:** Not yet implemented (empty directory exists)
 
 ---
@@ -119,6 +123,7 @@ InventoryMS/
 ```
 
 **Example Product:**
+
 ```json
 {
   "product_category": "Electronics",
@@ -153,6 +158,7 @@ InventoryMS/
 ```
 
 **Validation Rules:**
+
 - **IN** actions: Valid reasons are PURCHASE, RETURN, ADJUSTMENT
 - **OUT** actions: Valid reasons are SALE, DAMAGE, ADJUSTMENT
 
@@ -161,26 +167,28 @@ InventoryMS/
 ## API Endpoints
 
 ### Base URL
+
 ```
 http://localhost:5000/api/v1
 ```
 
 ### Product Endpoints
 
-| Method | Endpoint | Description | Request Body |
-|--------|----------|-------------|--------------|
-| POST | `/products/add-product` | Create new product | All product fields (see schema) |
-| GET | `/products/find-product?product_name=X&product_brand=Y` | Search products | Query params: product_name, product_brand (at least one required) |
-| DELETE | `/products/delete-product` | Delete product | `{ product_id: "..." }` |
-| PATCH | `/products/update-product/:id` | Update product fields | Allowed fields: category, name, brand, image, cost_price, selling_price, tax, unit, min_quantity, is_active |
+| Method | Endpoint                                                | Description           | Request Body                                                                                                |
+| ------ | ------------------------------------------------------- | --------------------- | ----------------------------------------------------------------------------------------------------------- |
+| POST   | `/products/add-product`                                 | Create new product    | All product fields (see schema)                                                                             |
+| GET    | `/products/find-product?product_name=X&product_brand=Y` | Search products       | Query params: product_name, product_brand (at least one required)                                           |
+| DELETE | `/products/delete-product`                              | Delete product        | `{ product_id: "..." }`                                                                                     |
+| PATCH  | `/products/update-product/:id`                          | Update product fields | Allowed fields: category, name, brand, image, cost_price, selling_price, tax, unit, min_quantity, is_active |
 
 ### Stock Endpoints
 
-| Method | Endpoint | Description | Request Body |
-|--------|----------|-------------|--------------|
-| POST | `/stocks/update-stocks` | Record stock transaction | `{ productId, stock_action, stock_quantity, reason, reference?, note? }` |
+| Method | Endpoint                | Description              | Request Body                                                             |
+| ------ | ----------------------- | ------------------------ | ------------------------------------------------------------------------ |
+| POST   | `/stocks/update-stocks` | Record stock transaction | `{ productId, stock_action, stock_quantity, reason, reference?, note? }` |
 
 ### Root Endpoint
+
 ```
 GET / → Returns welcome message
 ```
@@ -190,17 +198,21 @@ GET / → Returns welcome message
 ## Features Implemented
 
 ### ✅ Product Management
+
 1. **Create Products**
+
    - Full validation for required fields
    - Duplicate prevention (same name + brand)
    - Auto-generates lowercase fields for case-insensitive search
    - Default placeholder image support
 
 2. **Search Products**
+
    - Search by product name, brand, or both
    - Returns detailed search criteria and results count
 
 3. **Delete Products**
+
    - Simple deletion by product ID
 
 4. **Update Products**
@@ -209,6 +221,7 @@ GET / → Returns welcome message
    - Change detection (prevents empty updates)
 
 ### ✅ Stock Management
+
 1. **Stock Transactions**
    - Record IN/OUT movements
    - Validates action-reason combinations
@@ -217,11 +230,14 @@ GET / → Returns welcome message
    - Optional reference and notes
 
 ### ✅ Infrastructure
+
 1. **Database Connection**
+
    - MongoDB connection with Mongoose
    - Error handling and connection status logging
 
 2. **Middleware**
+
    - CORS enabled for cross-origin requests
    - JSON body parser (32kb limit)
    - URL-encoded data support
@@ -237,6 +253,7 @@ GET / → Returns welcome message
 ## Current Status
 
 ### 🟢 Working Features
+
 - ✅ Backend server setup and running
 - ✅ MongoDB database connection
 - ✅ Product CRUD operations (Create, Read, Update, Delete)
@@ -246,7 +263,9 @@ GET / → Returns welcome message
 - ✅ Multer middleware configured for file uploads
 
 ### 🟡 In Progress / Incomplete
+
 - ⚠️ **Cloudinary Integration**: Utility file exists but has bugs
+
   - Line 16: References undefined variable `file_path` (should be `file_details`)
   - Not integrated into product controller yet (see line 3 comment)
   - No `/upload-img` route is active (commented out in routes)
@@ -256,6 +275,7 @@ GET / → Returns welcome message
 - ⚠️ **Stock Updates Not Reflected in Products**: The `updateStock` controller creates stock transaction records but doesn't update the `product_quantity` in the Product model
 
 ### 🔴 Not Started
+
 - ❌ Frontend application
 - ❌ Stock history retrieval endpoint (commented in routes: `// history/:productId`)
 - ❌ Category-based product search (commented in routes)
@@ -269,13 +289,16 @@ GET / → Returns welcome message
 ## Known Issues & Limitations
 
 ### Critical Issues
+
 1. **Cloudinary Utility Bug** (`cloudinary.utility.js:16`)
+
    ```javascript
    // ISSUE: file_path is undefined, should be file_details
    const uploadResponse = cloudinary.uploader.upload(file_path, { ... })
    ```
 
 2. **Stock Quantity Not Syncing**
+
    - Stock transactions are recorded in the Stock model
    - However, `product_quantity` in Product model is NOT updated
    - This leads to inventory discrepancy
@@ -285,7 +308,9 @@ GET / → Returns welcome message
    - Should create directory or handle missing directory error
 
 ### Validation Gaps
+
 1. **Product Validation**
+
    - No validation for negative prices
    - Tax limited to 0-100 but no precision validation
    - SKU format not validated
@@ -295,6 +320,7 @@ GET / → Returns welcome message
    - No validation for negative quantities
 
 ### Code Quality Issues
+
 1. **Unused Imports**: Multer middleware imported but not used in routes
 2. **Commented Code**: Multiple commented routes suggest incomplete features
 3. **Error Response Inconsistency**: Some endpoints return error objects, others don't
@@ -305,12 +331,15 @@ GET / → Returns welcome message
 ## Pending Features
 
 ### High Priority
+
 1. **Fix Cloudinary Integration**
+
    - Correct the variable name bug
    - Integrate with product creation/update
    - Add image upload route
 
 2. **Sync Stock with Product Quantity**
+
    - Update `product_quantity` when stock transactions occur
    - Add transaction rollback on failure
 
@@ -321,12 +350,15 @@ GET / → Returns welcome message
    - Dashboard with analytics
 
 ### Medium Priority
+
 4. **Stock History Endpoint**
+
    ```javascript
    GET /api/v1/stocks/history/:productId
    ```
 
 5. **Category-based Search**
+
    ```javascript
    GET /api/v1/products/find-product/category?category=Electronics
    ```
@@ -336,7 +368,9 @@ GET / → Returns welcome message
    - Email/notification integration
 
 ### Low Priority
+
 7. **Bulk Operations**
+
    - Bulk product import (CSV/Excel)
    - Bulk stock updates
 
@@ -369,16 +403,19 @@ CLOUDINARY_API_SECRET=your_api_secret
 ### Running the Application
 
 1. **Install Dependencies**
+
    ```bash
    cd backend
    npm install
    ```
 
 2. **Configure Environment**
+
    - Create `.env` file in `backend/` directory
    - Add required environment variables
 
 3. **Start MongoDB**
+
    - Ensure MongoDB is running locally or use MongoDB Atlas
 
 4. **Run Development Server**
@@ -393,11 +430,13 @@ CLOUDINARY_API_SECRET=your_api_secret
 ## Development Workflow
 
 ### Current Development Approach
+
 - **Backend-First**: API development completed before frontend
 - **Testing**: Manual testing via Postman/Thunder Client (no automated tests)
 - **Version Control**: Git initialized (`.git` directory exists)
 
 ### Next Steps for Development
+
 1. Fix critical bugs in Cloudinary utility
 2. Implement stock-product quantity synchronization
 3. Add stock history endpoint
@@ -411,6 +450,7 @@ CLOUDINARY_API_SECRET=your_api_secret
 ## API Response Format
 
 ### Success Response
+
 ```json
 {
   "success": true,
@@ -420,6 +460,7 @@ CLOUDINARY_API_SECRET=your_api_secret
 ```
 
 ### Error Response
+
 ```json
 {
   "success": false,
@@ -427,30 +468,5 @@ CLOUDINARY_API_SECRET=your_api_secret
   "error": { ... } // Optional
 }
 ```
-
----
-
-## Summary for ChatGPT/AI Assistants
-
-**What this project is:**  
-A Node.js/Express inventory management system with MongoDB, currently backend-only, that tracks products and stock movements through RESTful APIs.
-
-**What works:**  
-Product CRUD operations, stock transaction recording, MongoDB integration, input validation, and basic error handling.
-
-**What doesn't work:**  
-Cloudinary file upload has a bug, stock updates don't sync with product quantities, frontend doesn't exist, and several planned endpoints are commented out.
-
-**Tech proficiency level:**  
-Junior to intermediate - the code shows understanding of Express patterns, Mongoose schemas, and async/await, but has some code quality issues like missing imports, inconsistent error handling, and features left incomplete.
-
-**Best approach for assistance:**  
-1. Ask about specific features or bug fixes
-2. Provide code samples for missing functionality
-3. Suggest architectural improvements
-4. Help with frontend integration planning
-5. Recommend best practices for production readiness
-
----
 
 **End of Context Document**
