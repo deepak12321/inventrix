@@ -1,4 +1,5 @@
 import Product from "../models/product.models.js";
+import uploadToCloudnary from "../utility/cloudinary.utility.js";
 
 // cloudnary feature implementation left
 
@@ -7,6 +8,7 @@ const saveProductDetails = async (request, response) => {
   try {
     const {
       product_category,
+      product_sub_category,
       product_name,
       product_brand,
       product_image,
@@ -20,21 +22,34 @@ const saveProductDetails = async (request, response) => {
       is_active,
     } = request.body;
 
-    // missing field validation
-    let notAvailable = "";
-    for (const key in request.body) {
-      if (!request.body[key] || request.body[key] === "") {
-        notAvailable = notAvailable + ", " + key;
+    const { path } = request.file;
+    console.log("hohooohohohohohoh", request.file);
+
+    const cloudnaryUploadStatus = await uploadToCloudnary(path);
+    console.log("cloudnary upload status");
+    console.log(cloudnaryUploadStatus.secure_url);
+
+    // Validate required fields before processing
+    const requiredFields = {
+      product_category,
+      product_sub_category,
+      product_name,
+      product_brand,
+    };
+
+    const missingFields = [];
+    for (const [fieldName, fieldValue] of Object.entries(requiredFields)) {
+      if (!fieldValue || fieldValue.trim() === "") {
+        missingFields.push(fieldName);
       }
     }
 
-    console.log(notAvailable);
-
-    // If any field Misiing return
-    if (notAvailable) {
+    if (missingFields.length > 0) {
       return response.status(400).json({
         success: false,
-        message: `${notAvailable} fields are missing`,
+        message: `Required fields are missing or empty: ${missingFields.join(
+          ", "
+        )}`,
       });
     }
 
@@ -52,15 +67,18 @@ const saveProductDetails = async (request, response) => {
 
     const productData = {
       product_category,
+      product_sub_category,
       product_name,
       product_brand,
       product_category_lower: product_category.toLowerCase(),
+      product_sub_category_lower: product_sub_category.toLowerCase(),
       product_brand_lower: product_brand.toLowerCase(),
       product_name_lower: product_name.toLowerCase(),
-      product_image,
-      product_cost_price,
+      product_image: cloudnaryUploadStatus.secure_url,
+      product_image_public_id: cloudnaryUploadStatus.public_id,
       product_unit,
       product_tax,
+      product_cost_price,
       product_selling_price,
       product_quantity,
       product_min_quantity,
@@ -194,6 +212,36 @@ const getAllCategory = async (request, response) => {
   }
 };
 
+const getSubcategoriesByCategory = async (request, response) => {
+  try {
+    const { categoryName } = request.params;
+
+    if (!categoryName) {
+      return response.status(400).json({
+        success: false,
+        message: "Category name is required",
+      });
+    }
+
+    const data = await Product.distinct("product_sub_category", {
+      product_category_lower: categoryName.toLowerCase(),
+      is_active: true,
+    });
+
+    return response.status(200).json({
+      success: true,
+      message: "Subcategories Fetched Successfully",
+      data: data,
+    });
+  } catch (error) {
+    console.log("An error occurred while fetching Subcategories", error);
+    return response.status(500).json({
+      success: false,
+      message: "Failed to fetch Subcategories",
+    });
+  }
+};
+
 const deleteProduct = async (request, response) => {
   // delete product form database
 
@@ -249,9 +297,9 @@ const updateEntries = async (request, response) => {
       });
     }
 
-    // 3️⃣ allowed fields
+    // 3️⃣ allowed fields (category excluded, subcategory allowed)
     const allowedUpdates = [
-      "product_category",
+      "product_sub_category",
       "product_name",
       "product_brand",
       "product_image",
@@ -270,6 +318,12 @@ const updateEntries = async (request, response) => {
       if (request.body[field] !== undefined) {
         product[field] = request.body[field];
         changesExist = true;
+
+        // Update lowercase field for subcategory
+        if (field === "product_sub_category") {
+          product.product_sub_category_lower =
+            request.body[field].toLowerCase();
+        }
       }
     }
 
@@ -301,6 +355,7 @@ export {
   saveProductDetails,
   getProductDetails,
   getAllCategory,
+  getSubcategoriesByCategory,
   getProdyctbyCategory,
   deleteProduct,
   updateEntries,
