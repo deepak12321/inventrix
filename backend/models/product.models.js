@@ -46,7 +46,7 @@ const productSchema = new mongoose.Schema(
       default:
         "https://img.freepik.com/free-vector/hand-drawn-no-data-illustration_23-2150696458.jpg?t=st=1765617934~exp=1765621534~hmac=47d6019c5221a000cadd3d13918f92ef6f800c69eaa290a2a65fe8e823cdad57&w=1480",
     },
-    product_image_product_key: {
+    product_image_public_id: {
       type: String,
       default: "xxxxxxxxxxxxxx",
     },

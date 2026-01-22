@@ -2,6 +2,7 @@ import { useState } from "react";
 import AddProduct from "./AddProduct";
 import DeleteProduct from "./DeleteProduct";
 import UpdateProduct from "./UpdateProduct";
+import EditProduct from "./EditProduct";
 
 const Product = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -9,6 +10,10 @@ const Product = () => {
     {
       tabName: "Add Product",
       component: AddProduct,
+    },
+    {
+      tabName: "Edit Product",
+      component: EditProduct,
     },
     {
       tabName: "Update Product",
@@ -31,13 +36,13 @@ const Product = () => {
       <div className="main-product-container">
         <div className="sub-product-container"></div>
 
-        <div className="tabs-container flex  px-5 ">
+        <div className="tabs-container flex px-5 ">
           {tabs.map((data, index) => {
             return (
               <div
                 key={index}
-                className={`border-2 rounded-t-xl hover:bg-amber-100 p-2 transition-all cursor-pointer
-                  ${activeTab === index ? "bg-amber-200" : "bg-gray-300"}`}
+                className={` border-2  rounded-t-xl hover:bg-amber-100 hover:border-amber-300 p-2 transition-all cursor-pointer hover:scale-105 
+                  ${activeTab === index ? "bg-amber-200 border-amber-400 " : "bg-gray-300 border-gray-400 "}`}
                 onClick={() => handleTabsClick(index)}
               >
                 <p className="text-xl">{data.tabName}</p>

@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./components/home/Home";
 import Navbar from "./components/global/Navbar";
 import Product from "./components/product/Product";
+import UpdateProduct from "./components/product/UpdateProduct";
 
 const App = () => {
   return (
@@ -13,6 +14,10 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/product" element={<Product />} />
+            <Route
+              path="/product/update/:productId"
+              element={<UpdateProduct />}
+            />
           </Routes>
         </div>
       </div>

@@ -63,7 +63,7 @@ productRouter
   .route("/find-product/category/:categoryName")
   .get(getProdyctbyCategory);
 
-productRouter.route("/delete-product").delete(deleteProduct);
+productRouter.route("/delete-product/:product_id").delete(deleteProduct);
 
 productRouter.route("/update-product/:id").patch(updateEntries);
 

@@ -41,7 +41,7 @@ const AddProduct = () => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-        }
+        },
       );
 
       console.log(response);
@@ -78,7 +78,7 @@ const AddProduct = () => {
 
   return (
     <>
-      <div className="main-add-product-container">
+      <div className="main-add-product-container ">
         <div className="sub-add-container-container w-[95%] m-auto">
           <div className="h-30 border-b-2 border-amber-400">
             <h1 className="text-5xl text-center pt-5">Add New Product</h1>
@@ -88,17 +88,17 @@ const AddProduct = () => {
             // action="http://localhost:8000/api/v1/products/upload"
             onSubmit={handleFormSubmit}
             // method="post"
-            className="pt-10  w-250 m-auto "
+            className="pt-10  w-300 m-auto px-15 rounded-2xl shadow-2xl mt-3  "
           >
             <div className="flex gap-5 flex-wrap justify-between w-full py-5">
               <div className="">
-                <p className="pl-2 text-2xl">
+                <p className="pl-2 text-md font-semibold">
                   Product Category<span className="text-red-600"> *</span>
                 </p>
                 <select
                   name="product_category"
                   id="product-category"
-                  className="border-2 bg-amber-100 border-amber-200 outline-0 p-2 px-4 w-120 rounded-xl text-xl"
+                  className="border-2 bg-gray-100 focus:bg-white border-gray-400 outline-0 p-2 px-4 w-120 rounded-xl text-xl"
                   onChange={(event) => {
                     handleCategoryChange(event);
                     handleFormChange(event);
@@ -117,13 +117,13 @@ const AddProduct = () => {
                 </select>
               </div>
               <div className={`${category === -1 ? "hidden" : "visible"}`}>
-                <p className="pl-2 text-2xl">
+                <p className="pl-2 text-md font-semibold">
                   Product Sub-Category <span className="text-red-600"> *</span>
                 </p>
                 <select
                   name="product_sub_category"
                   id="product-sub-category"
-                  className="border-2 bg-amber-100 border-amber-200 outline-0 p-2 px-4 w-120 rounded-xl text-xl"
+                  className="border-2 bg-gray-100 focus:bg-white border-gray-400 outline-0 p-2 px-4 w-120 rounded-xl text-xl"
                   onChange={(event) => {
                     handleCategoryChange(event);
                     handleFormChange(event);
@@ -138,33 +138,33 @@ const AddProduct = () => {
                           {data}
                         </option>
                       );
-                    }
+                    },
                   )}
                 </select>
               </div>
             </div>
             <div className="flex gap-5 flex-wrap justify-between w-full py-5">
               <div className="">
-                <p className="pl-2 text-2xl">
+                <p className="pl-2 text-md font-semibold">
                   Product Brand <span className="text-red-600"> *</span>
                 </p>
                 <input
                   type="text"
                   name="product_brand"
                   id="product-brand"
-                  className="border-2 bg-amber-100 border-amber-200 outline-0 p-2 px-4 w-120 rounded-xl text-xl"
+                  className="border-2 bg-gray-100 focus:bg-white border-gray-400 outline-0 p-2 px-4 w-120 rounded-xl text-xl"
                   onChange={handleFormChange}
                 />
               </div>
               <div className="">
-                <p className="pl-2 text-2xl">
+                <p className="pl-2 text-md font-semibold">
                   Product Name <span className="text-red-600"> *</span>
                 </p>
                 <input
                   type="text"
                   name="product_name"
                   id="product-name"
-                  className="border-2 bg-amber-100 border-amber-200 outline-0 p-2 px-4 w-120 rounded-xl text-xl"
+                  className="border-2 bg-gray-100 focus:bg-white border-gray-400 outline-0 p-2 px-4 w-120 rounded-xl text-xl"
                   onChange={handleFormChange}
                 />
               </div>
@@ -172,26 +172,26 @@ const AddProduct = () => {
 
             <div className="flex gap-5 flex-wrap justify-between w-full py-5">
               <div className="">
-                <p className="pl-2 text-2xl">
+                <p className="pl-2 text-md font-semibold">
                   Cost Price <span className="text-red-600"> *</span>
                 </p>
                 <input
                   type="number"
                   name="product_cost_price"
                   id="cost-price"
-                  className="border-2 bg-amber-100 border-amber-200 outline-0 p-2 px-4 w-120 rounded-xl text-xl"
+                  className="border-2 bg-gray-100 focus:bg-white border-gray-400 outline-0 p-2 px-4 w-120 rounded-xl text-xl"
                   onChange={handleFormChange}
                 />
               </div>
               <div className="">
-                <p className="pl-2 text-2xl">
+                <p className="pl-2 text-md font-semibold">
                   Selling Price <span className="text-red-600"> *</span>
                 </p>
                 <input
                   type="number"
                   name="product_selling_price"
                   id="selling-price"
-                  className="border-2 bg-amber-100 border-amber-200 outline-0 p-2 px-4 w-120 rounded-xl text-xl"
+                  className="border-2 bg-gray-100 focus:bg-white border-gray-400 outline-0 p-2 px-4 w-120 rounded-xl text-xl"
                   onChange={handleFormChange}
                   placeholder=""
                 />
@@ -199,25 +199,25 @@ const AddProduct = () => {
 
               <div className="flex gap-5 flex-wrap justify-between w-full py-5">
                 <div className="">
-                  <p className="pl-2 text-2xl">
+                  <p className="pl-2 text-md font-semibold">
                     Tax Percentage <span className="text-red-600"> *</span>
                   </p>
                   <input
                     type="number"
                     name="product_tax"
                     id="tax-percentage"
-                    className="border-2 bg-amber-100 border-amber-200 outline-0 p-2 px-4 w-120 rounded-xl text-xl"
+                    className="border-2 bg-gray-100 focus:bg-white border-gray-400 outline-0 p-2 px-4 w-120 rounded-xl text-xl"
                     onChange={handleFormChange}
                     placeholder=""
                   />
                 </div>
                 <div className="">
-                  <p className="pl-2 text-2xl">Product Sku</p>
+                  <p className="pl-2 text-md font-semibold">Product Sku</p>
                   <input
                     type="text"
                     name="product_sku"
                     id="product-sku"
-                    className="border-2 bg-amber-100 border-amber-200 outline-0 p-2 px-4 w-120 rounded-xl text-xl"
+                    className="border-2 bg-gray-100 focus:bg-white border-gray-400 outline-0 p-2 px-4 w-120 rounded-xl text-xl"
                     onChange={handleFormChange}
                     placeholder=""
                   />
@@ -225,7 +225,9 @@ const AddProduct = () => {
               </div>
               <div className="flex gap-5 flex-wrap justify-center w-full py-5">
                 <div className="flex flex-col gap-2">
-                  <p className="pl-2 text-2xl font-medium">Product Image</p>
+                  <p className="pl-2 text-md font-semibold font-medium">
+                    Product Image
+                  </p>
 
                   <input
                     type="file"
@@ -244,8 +246,18 @@ const AddProduct = () => {
               </div>
 
               <div className="flex gap-5 flex-wrap justify-center w-full py-5">
-                <button type="reset">Reset</button>
-                <button type="submit">Submit</button>
+                <button
+                  type="reset"
+                  className="h-10 w-45 bg-yellow-300 cursor-pointer hover:shadow-md hover:bg-yellow-400 hover:scale-110 transition-all rounded text-white font-semibold "
+                >
+                  Reset
+                </button>
+                <button
+                  type="submit"
+                  className="h-10 w-45 bg-blue-400 cursor-pointer hover:shadow-md hover:bg-blue-500 hover:scale-110 transition-all rounded text-white font-semibold "
+                >
+                  Submit
+                </button>
               </div>
             </div>
           </form>

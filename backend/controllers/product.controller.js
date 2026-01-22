@@ -11,7 +11,6 @@ const saveProductDetails = async (request, response) => {
       product_sub_category,
       product_name,
       product_brand,
-      product_image,
       product_cost_price,
       product_unit,
       product_tax,
@@ -48,7 +47,7 @@ const saveProductDetails = async (request, response) => {
       return response.status(400).json({
         success: false,
         message: `Required fields are missing or empty: ${missingFields.join(
-          ", "
+          ", ",
         )}`,
       });
     }
@@ -155,7 +154,7 @@ const getProductDetails = async (request, response) => {
   } catch (error) {
     console.log(
       "Something went wrong while fetching data. (getProductDetails) :- ",
-      error
+      error,
     );
     return response.status(500).json({
       success: false,
@@ -246,7 +245,10 @@ const deleteProduct = async (request, response) => {
   // delete product form database
 
   try {
-    const { product_id } = request.body;
+    // const { product_id } = request.body;
+    const { product_id } = request.params;
+
+    console.log("request to delete product with id ", product_id);
 
     if (!product_id) {
       return response.status(400).json({
@@ -265,7 +267,7 @@ const deleteProduct = async (request, response) => {
   } catch (error) {
     console.log(
       "Error occurred while deleting the Product Detils (deleteProduct) :- ",
-      error
+      error,
     );
     return response.status(500).json({
       success: false,

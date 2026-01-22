@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import ItemsDisplay from "./ItemsDisplay";
+import ItemsDisplay from "../product/ItemsDisplay";
 
 const Home = () => {
   const [categoryName, setCategoryName] = useState([]);
