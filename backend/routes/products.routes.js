@@ -7,6 +7,7 @@ import {
   getAllCategory,
   getSubcategoriesByCategory,
   getProdyctbyCategory,
+  getAllProducts,
 } from "../controllers/product.controller.js";
 
 import multerUpload from "../middleware/multer.middleware.js";
@@ -66,6 +67,8 @@ productRouter
 productRouter.route("/delete-product/:product_id").delete(deleteProduct);
 
 productRouter.route("/update-product/:id").patch(updateEntries);
+
+productRouter.route("/all-products").get(getAllProducts);
 
 // productRouter.route("/upload-img").post(m);
 export default productRouter;

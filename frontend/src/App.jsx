@@ -4,6 +4,7 @@ import Home from "./components/home/Home";
 import Navbar from "./components/global/Navbar";
 import Product from "./components/product/Product";
 import UpdateProduct from "./components/product/UpdateProduct";
+import Stock from "./components/stocks/Stock";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
               path="/product/update/:productId"
               element={<UpdateProduct />}
             />
+            <Route path="/stocks" element={<Stock />} />
           </Routes>
         </div>
       </div>

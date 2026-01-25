@@ -353,6 +353,24 @@ const updateEntries = async (request, response) => {
   }
 };
 
+const getAllProducts = async (request, response) => {
+  try {
+    const data = await Product.find({ is_active: true }).sort({ product_name: 1 });
+
+    return response.status(200).json({
+      success: true,
+      message: "Products fetched successfully",
+      data: data,
+    });
+  } catch (error) {
+    console.log("An error occurred while fetching all products", error);
+    return response.status(500).json({
+      success: false,
+      message: "Failed to fetch products",
+    });
+  }
+};
+
 export {
   saveProductDetails,
   getProductDetails,
@@ -361,4 +379,5 @@ export {
   getProdyctbyCategory,
   deleteProduct,
   updateEntries,
+  getAllProducts,
 };
