@@ -22,11 +22,8 @@ const saveProductDetails = async (request, response) => {
     } = request.body;
 
     const { path } = request.file;
-    console.log("hohooohohohohohoh", request.file);
 
     const cloudnaryUploadStatus = await uploadToCloudnary(path);
-    console.log("cloudnary upload status");
-    console.log(cloudnaryUploadStatus.secure_url);
 
     // Validate required fields before processing
     const requiredFields = {
@@ -88,7 +85,6 @@ const saveProductDetails = async (request, response) => {
     // console.log(uploadData);
 
     const uploadResult = await Product.create(productData);
-    console.log(uploadResult);
 
     // console.log(productData);
     return response.status(200).json({
@@ -97,7 +93,7 @@ const saveProductDetails = async (request, response) => {
       data: uploadResult,
     });
   } catch (error) {
-    console.log("error while saving the data (saveProductsDetails) :-", error);
+
     response.status(404).json({
       success: false,
       message:
@@ -111,7 +107,6 @@ const getProductDetails = async (request, response) => {
   // fetch product from database
   try {
     const { product_name, product_brand } = request.query;
-    console.log(product_name);
 
     if (!product_name && !product_brand) {
       return response.status(400).json({
@@ -152,10 +147,7 @@ const getProductDetails = async (request, response) => {
       data: searchResult,
     });
   } catch (error) {
-    console.log(
-      "Something went wrong while fetching data. (getProductDetails) :- ",
-      error,
-    );
+
     return response.status(500).json({
       success: false,
       message: `Something went wrong while fetching the data.`,
@@ -185,7 +177,7 @@ const getProdyctbyCategory = async (request, response) => {
       data: data,
     });
   } catch (error) {
-    console.log("An error occurred while fetching Category", error);
+
     return response.status(500).json({
       success: false,
       message: "Failed to fetch Category",
@@ -196,7 +188,6 @@ const getProdyctbyCategory = async (request, response) => {
 const getAllCategory = async (request, response) => {
   try {
     const data = await Product.distinct("product_category");
-    console.log(data);
     return response.status(200).json({
       success: true,
       message: "Category Fetched Successfully",
@@ -233,7 +224,7 @@ const getSubcategoriesByCategory = async (request, response) => {
       data: data,
     });
   } catch (error) {
-    console.log("An error occurred while fetching Subcategories", error);
+
     return response.status(500).json({
       success: false,
       message: "Failed to fetch Subcategories",
@@ -248,7 +239,7 @@ const deleteProduct = async (request, response) => {
     // const { product_id } = request.body;
     const { product_id } = request.params;
 
-    console.log("request to delete product with id ", product_id);
+
 
     if (!product_id) {
       return response.status(400).json({
@@ -265,10 +256,7 @@ const deleteProduct = async (request, response) => {
       data: isDeleted,
     });
   } catch (error) {
-    console.log(
-      "Error occurred while deleting the Product Detils (deleteProduct) :- ",
-      error,
-    );
+
     return response.status(500).json({
       success: false,
       message:
@@ -363,7 +351,7 @@ const getAllProducts = async (request, response) => {
       data: data,
     });
   } catch (error) {
-    console.log("An error occurred while fetching all products", error);
+
     return response.status(500).json({
       success: false,
       message: "Failed to fetch products",

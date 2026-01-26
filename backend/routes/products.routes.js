@@ -28,11 +28,6 @@ productRouter
       // Multer stores uploaded file in request.file, not request.body
       const uploadedFile = request.file;
 
-      console.log("Product Image --", uploadedFile);
-      console.log("File saved at:", uploadedFile?.path);
-      console.log("Original filename:", uploadedFile?.originalname);
-      console.log("Other form data:", request.body);
-
       if (!uploadedFile) {
         return response.status(400).json({
           Success: false,
@@ -49,7 +44,7 @@ productRouter
         },
       });
     } catch (error) {
-      console.log("Something went wrong:", error);
+
       return response.status(500).json({
         Success: false,
         message: error.message,

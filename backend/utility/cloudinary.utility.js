@@ -9,7 +9,6 @@ const uploadToCloudnary = async (file_path, file_name) => {
 
   try {
     if (!file_path) {
-      console.log("Cloudinary expects file url.");
       return response.status(404).json({
         success: false,
         message: "Path not found for the image to upload to server.",
@@ -22,8 +21,6 @@ const uploadToCloudnary = async (file_path, file_name) => {
       resource_type: "image",
     });
 
-    console.log("cloudnary ------------", uploadResponse);
-
     return uploadResponse;
   } catch (error) {
     console.log(
@@ -34,12 +31,8 @@ const uploadToCloudnary = async (file_path, file_name) => {
     try {
       // Use await with fs.promises.unlink for async deletion
       await fs.unlink(file_path);
-      console.log("Successfully deleted local file:", file_path);
     } catch (error) {
-      console.log(
-        "Cloudinary.utils.js says :- Failed to delete file from local storage:- ",
-        error
-      );
+
     }
   }
 };
