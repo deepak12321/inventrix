@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../../config/api";
 
 const StockHistory = () => {
     const [products, setProducts] = useState([]);
@@ -16,7 +17,7 @@ const StockHistory = () => {
         try {
             setFetchingProducts(true);
             const response = await axios.get(
-                "http://localhost:8000/api/v1/products/all-products"
+                `${API_BASE_URL}/api/v1/products/all-products`
             );
             setProducts(response.data.data);
         } catch (error) {
@@ -31,7 +32,7 @@ const StockHistory = () => {
         try {
             setLoading(true);
             const response = await axios.get(
-                `http://localhost:8000/api/v1/stocks/history/${productId}`
+                `${API_BASE_URL}/api/v1/stocks/history/${productId}`
             );
             setHistory(response.data.data);
         } catch (error) {
@@ -213,8 +214,8 @@ const StockHistory = () => {
                                         <tr
                                             key={record._id}
                                             className={`transition-colors hover:bg-gray-50 ${record.stock_action === "IN"
-                                                    ? "bg-green-50 hover:bg-green-100"
-                                                    : "bg-red-50 hover:bg-red-100"
+                                                ? "bg-green-50 hover:bg-green-100"
+                                                : "bg-red-50 hover:bg-red-100"
                                                 }`}
                                         >
                                             <td className="px-4 py-3 text-sm text-gray-700">
@@ -223,8 +224,8 @@ const StockHistory = () => {
                                             <td className="px-4 py-3">
                                                 <span
                                                     className={`inline-flex px-3 py-1 rounded-full text-sm font-bold ${record.stock_action === "IN"
-                                                            ? "bg-green-200 text-green-800"
-                                                            : "bg-red-200 text-red-800"
+                                                        ? "bg-green-200 text-green-800"
+                                                        : "bg-red-200 text-red-800"
                                                         }`}
                                                 >
                                                     {record.stock_action}
@@ -236,8 +237,8 @@ const StockHistory = () => {
                                             <td className="px-4 py-3 text-right">
                                                 <span
                                                     className={`text-lg font-bold ${record.stock_action === "IN"
-                                                            ? "text-green-600"
-                                                            : "text-red-600"
+                                                        ? "text-green-600"
+                                                        : "text-red-600"
                                                         }`}
                                                 >
                                                     {record.stock_action === "IN" ? "+" : "-"}

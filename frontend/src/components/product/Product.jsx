@@ -1,7 +1,5 @@
 import { useState } from "react";
 import AddProduct from "./AddProduct";
-import DeleteProduct from "./DeleteProduct";
-import UpdateProduct from "./UpdateProduct";
 import EditProduct from "./EditProduct";
 
 const Product = () => {
@@ -15,14 +13,7 @@ const Product = () => {
       tabName: "Edit Product",
       component: EditProduct,
     },
-    {
-      tabName: "Update Product",
-      component: UpdateProduct,
-    },
-    {
-      tabName: "Delete Product",
-      component: DeleteProduct,
-    },
+
   ];
 
   const handleTabsClick = (index) => {

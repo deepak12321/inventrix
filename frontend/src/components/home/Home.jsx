@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../../config/api";
 import ItemsDisplay from "../product/ItemsDisplay";
 
 const Home = () => {
@@ -24,7 +25,7 @@ const Home = () => {
     try {
       setLoading((prev) => ({ ...prev, categories: true }));
       const response = await axios.get(
-        "http://localhost:8000/api/v1/products/category-all"
+        `${API_BASE_URL}/api/v1/products/category-all`
       );
       const data = response.data.data.sort();
       setCategoryName(data);
@@ -52,13 +53,13 @@ const Home = () => {
 
       // Fetch subcategories for this category
       const subcatResponse = await axios.get(
-        `http://localhost:8000/api/v1/products/subcategories/${selectedCategory}`
+        `${API_BASE_URL}/api/v1/products/subcategories/${selectedCategory}`
       );
       setSubcategories(subcatResponse.data.data.sort());
 
       // Fetch all products for this category
       const productsResponse = await axios.get(
-        `http://localhost:8000/api/v1/products/find-product/category/${selectedCategory}`
+        `${API_BASE_URL}/api/v1/products/find-product/category/${selectedCategory}`
       );
       setProductData(productsResponse.data.data);
     } catch (error) {
@@ -135,10 +136,9 @@ const Home = () => {
                   className={`
                     px-6 py-4 cursor-pointer transition-all duration-200 border-b border-gray-100
                     hover:bg-indigo-50 hover:border-l-4 hover:border-indigo-600
-                    ${
-                      active.category === data
-                        ? "bg-indigo-100 border-l-4 border-indigo-600 font-semibold text-indigo-700"
-                        : "text-gray-700"
+                    ${active.category === data
+                      ? "bg-indigo-100 border-l-4 border-indigo-600 font-semibold text-indigo-700"
+                      : "text-gray-700"
                     }
                   `}
                   onClick={(event) => handleCategoryClick(event, index)}
@@ -168,10 +168,9 @@ const Home = () => {
                     className={`
                       px-6 py-4 cursor-pointer transition-all duration-200 border-b border-gray-100
                       hover:bg-blue-50 hover:border-l-4 hover:border-blue-600
-                      ${
-                        active.subcategory === subcategory
-                          ? "bg-blue-100 border-l-4 border-blue-600 font-semibold text-blue-700"
-                          : "text-gray-700"
+                      ${active.subcategory === subcategory
+                        ? "bg-blue-100 border-l-4 border-blue-600 font-semibold text-blue-700"
+                        : "text-gray-700"
                       }
                     `}
                     onClick={(event) =>
@@ -206,10 +205,9 @@ const Home = () => {
                     className={`
                       px-6 py-4 cursor-pointer transition-all duration-200 border-b border-gray-100
                       hover:bg-cyan-50 hover:border-l-4 hover:border-cyan-600
-                      ${
-                        active.brand === brand
-                          ? "bg-cyan-100 border-l-4 border-cyan-600 font-semibold text-cyan-700"
-                          : "text-gray-700"
+                      ${active.brand === brand
+                        ? "bg-cyan-100 border-l-4 border-cyan-600 font-semibold text-cyan-700"
+                        : "text-gray-700"
                       }
                     `}
                     onClick={(event) => handleBrandClick(event, brand)}
@@ -242,10 +240,9 @@ const Home = () => {
                     className={`
                       px-6 py-4 cursor-pointer transition-all duration-200 border-b border-gray-100
                       hover:bg-teal-50 hover:border-l-4 hover:border-teal-600
-                      ${
-                        active.item === index
-                          ? "bg-teal-100 border-l-4 border-teal-600 font-semibold text-teal-700"
-                          : "text-gray-700"
+                      ${active.item === index
+                        ? "bg-teal-100 border-l-4 border-teal-600 font-semibold text-teal-700"
+                        : "text-gray-700"
                       }
                     `}
                     onClick={(event) => handleItemsClick(event, index)}
@@ -267,9 +264,9 @@ const Home = () => {
         {/* Details Section */}
         <div className="flex-1 bg-gradient-to-br from-gray-50 to-slate-100 overflow-y-auto">
           {active.category != null &&
-          active.subcategory != null &&
-          active.brand != null &&
-          active.item != null ? (
+            active.subcategory != null &&
+            active.brand != null &&
+            active.item != null ? (
             <div className="p-8">
               {/* Breadcrumb */}
               <div className="mb-6 flex items-center space-x-2 text-sm text-gray-600">

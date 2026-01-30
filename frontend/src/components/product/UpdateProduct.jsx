@@ -7,7 +7,7 @@ const UpdateProduct = ({ data }) => {
   return (
     <>
       {/* <div className="item_name">{data.product_name}</div */}
-      hello
+      Comming Soon ....
     </>
   );
 };

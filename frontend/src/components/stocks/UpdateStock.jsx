@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../../config/api";
 
 const UpdateStock = () => {
     const [products, setProducts] = useState([]);
@@ -24,7 +25,7 @@ const UpdateStock = () => {
         try {
             setFetchingProducts(true);
             const response = await axios.get(
-                "http://localhost:8000/api/v1/products/all-products"
+                `${API_BASE_URL}/api/v1/products/all-products`
             );
             setProducts(response.data.data);
         } catch (error) {
@@ -70,7 +71,7 @@ const UpdateStock = () => {
         try {
             setLoading(true);
             const response = await axios.post(
-                "http://localhost:8000/api/v1/stocks/update-stocks",
+                `${API_BASE_URL}/api/v1/stocks/update-stocks`,
                 {
                     productId: formData.productId,
                     stock_action: formData.stock_action,
@@ -160,8 +161,8 @@ const UpdateStock = () => {
                             <div className="flex gap-4">
                                 <label
                                     className={`flex-1 flex items-center justify-center gap-3 px-6 py-4 rounded-xl border-2 cursor-pointer transition-all ${formData.stock_action === "IN"
-                                            ? "bg-green-100 border-green-500 shadow-md"
-                                            : "bg-gray-50 border-gray-300 hover:border-green-400"
+                                        ? "bg-green-100 border-green-500 shadow-md"
+                                        : "bg-gray-50 border-gray-300 hover:border-green-400"
                                         }`}
                                 >
                                     <input
@@ -178,8 +179,8 @@ const UpdateStock = () => {
                                 </label>
                                 <label
                                     className={`flex-1 flex items-center justify-center gap-3 px-6 py-4 rounded-xl border-2 cursor-pointer transition-all ${formData.stock_action === "OUT"
-                                            ? "bg-red-100 border-red-500 shadow-md"
-                                            : "bg-gray-50 border-gray-300 hover:border-red-400"
+                                        ? "bg-red-100 border-red-500 shadow-md"
+                                        : "bg-gray-50 border-gray-300 hover:border-red-400"
                                         }`}
                                 >
                                     <input
@@ -236,8 +237,8 @@ const UpdateStock = () => {
                         {selectedProduct && formData.stock_quantity && (
                             <div
                                 className={`p-5 rounded-xl border-2 ${projectedStock < 0
-                                        ? "bg-red-50 border-red-300"
-                                        : "bg-blue-50 border-blue-300"
+                                    ? "bg-red-50 border-red-300"
+                                    : "bg-blue-50 border-blue-300"
                                     }`}
                             >
                                 <h3 className="text-sm font-semibold text-gray-700 mb-3">
@@ -254,8 +255,8 @@ const UpdateStock = () => {
                                         <p className="text-xs text-gray-600 mb-1">Change</p>
                                         <p
                                             className={`text-2xl font-bold ${formData.stock_action === "IN"
-                                                    ? "text-green-600"
-                                                    : "text-red-600"
+                                                ? "text-green-600"
+                                                : "text-red-600"
                                                 }`}
                                         >
                                             {formData.stock_action === "IN" ? "+" : "-"}
@@ -317,8 +318,8 @@ const UpdateStock = () => {
                             type="submit"
                             disabled={loading}
                             className={`w-full py-4 rounded-xl font-bold text-white text-lg shadow-lg transition-all transform ${loading
-                                    ? "bg-gray-400 cursor-not-allowed"
-                                    : "bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 hover:scale-105"
+                                ? "bg-gray-400 cursor-not-allowed"
+                                : "bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 hover:scale-105"
                                 }`}
                         >
                             {loading ? "Updating..." : "Update Stock"}

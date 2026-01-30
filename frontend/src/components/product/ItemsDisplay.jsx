@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../../config/api";
 
 const ItemsDisplay = ({ data, setItemEdited }) => {
   const productId = data._id;
@@ -14,7 +15,7 @@ const ItemsDisplay = ({ data, setItemEdited }) => {
       console.log(typeof product_id);
       if (confirm) {
         const deleteProduct = await axios.delete(
-          `http://localhost:8000/api/v1/products/delete-product/${product_id}`,
+          `${API_BASE_URL}/api/v1/products/delete-product/${product_id}`,
         );
         if (deleteProduct) {
           setItemEdited(true);
@@ -36,11 +37,10 @@ const ItemsDisplay = ({ data, setItemEdited }) => {
           </h1>
           <div className="flex items-center gap-3 mt-3">
             <span
-              className={`px-4 py-1.5 rounded-full text-sm font-bold ${
-                data.is_active
-                  ? "bg-green-500 text-white"
-                  : "bg-gray-400 text-white"
-              }`}
+              className={`px-4 py-1.5 rounded-full text-sm font-bold ${data.is_active
+                ? "bg-green-500 text-white"
+                : "bg-gray-400 text-white"
+                }`}
             >
               {data.is_active ? "✓ Active" : "✗ Inactive"}
             </span>
@@ -167,11 +167,10 @@ const ItemsDisplay = ({ data, setItemEdited }) => {
 
           {/* Stock Section */}
           <div
-            className={`rounded-2xl p-6 border-2 ${
-              data.product_quantity <= data.product_min_quantity
-                ? "bg-gradient-to-br from-red-50 to-red-100 border-red-300"
-                : "bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-300"
-            }`}
+            className={`rounded-2xl p-6 border-2 ${data.product_quantity <= data.product_min_quantity
+              ? "bg-gradient-to-br from-red-50 to-red-100 border-red-300"
+              : "bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-300"
+              }`}
           >
             <h3 className="text-lg font-bold text-gray-800 mb-4">
               Stock Information
@@ -179,20 +178,18 @@ const ItemsDisplay = ({ data, setItemEdited }) => {
             <div className="flex items-end justify-between">
               <div>
                 <p
-                  className={`text-sm font-semibold mb-1 ${
-                    data.product_quantity <= data.product_min_quantity
-                      ? "text-red-600"
-                      : "text-emerald-600"
-                  }`}
+                  className={`text-sm font-semibold mb-1 ${data.product_quantity <= data.product_min_quantity
+                    ? "text-red-600"
+                    : "text-emerald-600"
+                    }`}
                 >
                   Current Stock
                 </p>
                 <p
-                  className={`text-5xl font-bold ${
-                    data.product_quantity <= data.product_min_quantity
-                      ? "text-red-700"
-                      : "text-emerald-700"
-                  }`}
+                  className={`text-5xl font-bold ${data.product_quantity <= data.product_min_quantity
+                    ? "text-red-700"
+                    : "text-emerald-700"
+                    }`}
                 >
                   {data.product_quantity}
                 </p>

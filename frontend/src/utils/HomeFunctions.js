@@ -1,9 +1,10 @@
 import axios from "axios";
+import { API_BASE_URL } from "../config/api";
 
 const fetchCategoryName = async () => {
   try {
     const response = await axios.get(
-      "http://localhost:8000/api/v1/products/category-all"
+      `${API_BASE_URL}/api/v1/products/category-all`
     );
     console.log(response.data.data);
     const data = response.data.data.sort();

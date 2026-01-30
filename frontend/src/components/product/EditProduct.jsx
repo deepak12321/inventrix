@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../../config/api";
 import ItemsDisplay from "./ItemsDisplay";
 
 const EditProduct = () => {
@@ -25,7 +26,7 @@ const EditProduct = () => {
     try {
       setLoading((prev) => ({ ...prev, categories: true }));
       const response = await axios.get(
-        "http://localhost:8000/api/v1/products/category-all",
+        `${API_BASE_URL}/api/v1/products/category-all`,
       );
       const data = response.data.data.sort();
       setCategoryName(data);
@@ -53,13 +54,13 @@ const EditProduct = () => {
 
       // Fetch subcategories for this category
       const subcatResponse = await axios.get(
-        `http://localhost:8000/api/v1/products/subcategories/${selectedCategory}`,
+        `${API_BASE_URL}/api/v1/products/subcategories/${selectedCategory}`,
       );
       setSubcategories(subcatResponse.data.data.sort());
 
       // Fetch all products for this category
       const productsResponse = await axios.get(
-        `http://localhost:8000/api/v1/products/find-product/category/${selectedCategory}`,
+        `${API_BASE_URL}/api/v1/products/find-product/category/${selectedCategory}`,
       );
       setProductData(productsResponse.data.data);
     } catch (error) {
@@ -230,9 +231,9 @@ const EditProduct = () => {
         style={{ height: "calc(100vh - 220px)" }}
       >
         {active.category != null &&
-        active.subcategory != null &&
-        active.brand != null &&
-        active.item != null ? (
+          active.subcategory != null &&
+          active.brand != null &&
+          active.item != null ? (
           <div className="px-8 py-8">
             {/* Breadcrumb */}
             <div className="mb-6 flex items-center flex-wrap gap-2 text-sm">

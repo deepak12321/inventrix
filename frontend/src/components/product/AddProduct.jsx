@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { productCategories } from "../../../data/Categories";
 import axios from "axios";
+import { API_BASE_URL } from "../../config/api";
 
 const AddProduct = () => {
   const [category, setCategory] = useState(0);
@@ -35,7 +36,7 @@ const AddProduct = () => {
       });
 
       const response = await axios.post(
-        "http://localhost:8000/api/v1/products/add-product",
+        `${API_BASE_URL}/api/v1/products/add-product`,
         formDataToSend,
         {
           headers: {
@@ -107,12 +108,12 @@ const AddProduct = () => {
                   {/* <option value="">Select Category</option> */}
                   {category >= 0
                     ? productCategories.map((data, index) => {
-                        return (
-                          <option key={index} value={data.category.toLowerCase}>
-                            {data.category}
-                          </option>
-                        );
-                      })
+                      return (
+                        <option key={index} value={data.category.toLowerCase}>
+                          {data.category}
+                        </option>
+                      );
+                    })
                     : ""}
                 </select>
               </div>
